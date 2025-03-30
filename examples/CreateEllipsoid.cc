@@ -1,9 +1,10 @@
-#include "../EllipsoidalCorridor/SingleEllipsoid.h"
+#include "../EllipsoidalCorridor/InflatedEllipsoid.h"
 #include "helpers/read_point_cloud.h"
 
 
 
 int main(){
+    using namespace CorrGen;
     int Nq;
     // Get the current folder location
     std::string current_folder = __FILE__;

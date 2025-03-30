@@ -10,7 +10,6 @@ find_package(drake CONFIG REQUIRED PATHS /opt/drake)
 
 
 add_library(EllipsoidalCorridor
-    EllipsoidalCorridorOptions.h
     EllipsoidalCorridor.h
     EllipsoidalCorridor.cc
     )

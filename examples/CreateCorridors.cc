@@ -1,10 +1,10 @@
 #include "../EllipsoidalCorridor/EllipsoidalCorridor.h"
-#include "../EllipsoidalCorridor/EllipsoidalCorridorOptions.h"
 #include "helpers/read_point_cloud.h"
 
 
 
 int main(){
+    using namespace CorrGen;
     int Nq;
     int N_samples = 30;
     // Get the current folder location
@@ -18,8 +18,10 @@ int main(){
 
     // Let us plan from 0,0,... to 1,1,...
     // The point cloud data can be generated in the box 0 < q < 1
-    Eigen::VectorXd start_state = Eigen::VectorXd::Zero(Nq);
-    Eigen::VectorXd end_state = Eigen::VectorXd::Ones(Nq);
+    Eigen::VectorXd start_state(2);
+    start_state << 0.3, 0.3;
+    Eigen::VectorXd end_state(2);
+    end_state << 0.7, 0.5;
 
     // Linearly interpolate between them to create a reference path.
     auto reference_path = drake::trajectories::PiecewisePolynomial<double>::FirstOrderHold(

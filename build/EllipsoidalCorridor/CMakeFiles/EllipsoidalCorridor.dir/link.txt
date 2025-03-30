@@ -1,0 +1,2 @@
+/usr/bin/ar qc libEllipsoidalCorridor.a CMakeFiles/EllipsoidalCorridor.dir/EllipsoidalCorridor.cc.o
+/usr/bin/ranlib libEllipsoidalCorridor.a
