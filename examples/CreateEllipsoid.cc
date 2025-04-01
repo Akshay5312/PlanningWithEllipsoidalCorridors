@@ -27,62 +27,64 @@ int main(){
     // Create the corridor.
     InflatedEllipsoid<double> corridor = GenerateInflatedEllipsoid(ellipsoid_options);
 
-    // The corridor is now created.
+    // // The corridor is now created.
+
+    auto ellipsoid_samples = corridor.sample(1500);
 
 
-    //VISUALIZATION
-    //option 1. Meshcat
-    // Create a meshcat visualizer, and add the points in the point cloud to it. 
-    // Sample the surface and interior of all ellipsoids.
-    // Create an alphashape mesh. This is the corridor.
-    // Add the alphashape to meshcat to visualize it.
+    // //VISUALIZATION
+    // //option 1. Meshcat
+    // // Create a meshcat visualizer, and add the points in the point cloud to it. 
+    // // Sample the surface and interior of all ellipsoids.
+    // // Create an alphashape mesh. This is the corridor.
+    // // Add the alphashape to meshcat to visualize it.
 
-    // option 2. Matlab. 
-    // Sample the corridor to find ellipsoids at times between 0 and 1.
-    // First, find samples in a ball.
-    int N_ball_samples = 1000;
-    Eigen::MatrixXd ball_samples(Nq, N_ball_samples);
-    for (int k = 0; k < N_ball_samples; ++k) {
-        ball_samples.col(k) = Eigen::VectorXd::Random(Nq);
-        ball_samples.col(k) = ball_samples.col(k) / ball_samples.col(k).norm();
-        // ball_samples.col(k) = ball_samples.col(k) * Eigen::VectorXd::Random(1);
-    }
+    // // option 2. Matlab. 
+    // // Sample the corridor to find ellipsoids at times between 0 and 1.
+    // // First, find samples in a ball.
+    // int N_ball_samples = 1000;
+    // Eigen::MatrixXd ball_samples(Nq, N_ball_samples);
+    // for (int k = 0; k < N_ball_samples; ++k) {
+    //     ball_samples.col(k) = Eigen::VectorXd::Random(Nq);
+    //     ball_samples.col(k) = ball_samples.col(k) / ball_samples.col(k).norm();
+    //     // ball_samples.col(k) = ball_samples.col(k) * Eigen::VectorXd::Random(1);
+    // }
 
 
-    std::vector<Eigen::VectorXd> ellipsoid_samples(N_ball_samples);
+    // std::vector<Eigen::VectorXd> ellipsoid_samples(N_ball_samples);
 
-    // Sample points within the ellipsoids
-    auto E_eps = corridor.E_;
-    auto d_eps = corridor.d_;
-    auto f_eps = corridor.f_;
+    // // Sample points within the ellipsoids
+    // auto E_eps = corridor.E_;
+    // auto d_eps = corridor.d_;
+    // auto f_eps = corridor.f_;
     
-    drake::log()->info("E_eps: {}", E_eps);
-    drake::log()->info("d_eps: {}", d_eps);
-    drake::log()->info("f_eps: {}", f_eps);
-    // Add cost to the prog.
+    // drake::log()->info("E_eps: {}", E_eps);
+    // drake::log()->info("d_eps: {}", d_eps);
+    // drake::log()->info("f_eps: {}", f_eps);
+    // // Add cost to the prog.
     
 
-    Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigen_solver(E_eps);
-    Eigen::MatrixXd C_eps = eigen_solver.operatorSqrt();
-    drake::log()->info("C_eps: \n{}", C_eps);
-    Eigen::MatrixXd C_eps_inv = C_eps.inverse();
+    // Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigen_solver(E_eps);
+    // Eigen::MatrixXd C_eps = eigen_solver.operatorSqrt();
+    // drake::log()->info("C_eps: \n{}", C_eps);
+    // Eigen::MatrixXd C_eps_inv = C_eps.inverse();
 
-    Eigen::VectorXd q_tilde = corridor.center();
+    // Eigen::VectorXd q_tilde = corridor.center();
 
     
-    // drake::log()->info("q_tilde: \n{}", C_eps);
+    // // drake::log()->info("q_tilde: \n{}", C_eps);
 
-    for(int i = 0; i < N_ball_samples; ++i){
-        double o = (
-            f_eps + 
-            (2*d_eps.transpose() * reference_point
-            + reference_point.transpose() * E_eps * reference_point 
-            - q_tilde.transpose() * E_eps * q_tilde)[0] );
+    // for(int i = 0; i < N_ball_samples; ++i){
+    //     double o = (
+    //         f_eps + 
+    //         (2*d_eps.transpose() * reference_point
+    //         + reference_point.transpose() * E_eps * reference_point 
+    //         - q_tilde.transpose() * E_eps * q_tilde)[0] );
 
-        drake::log()->info("o: {}", o);
+    //     drake::log()->info("o: {}", o);
 
-        ellipsoid_samples[i] = sqrt(1 - o) *(C_eps_inv * (ball_samples.col(i))) + q_tilde; 
-    }
+    //     ellipsoid_samples[i] = sqrt(1 - o) *(C_eps_inv * (ball_samples.col(i))) + q_tilde; 
+    // }
 
     // Save the points to an "ellipsoid cloud" file.
     std::string ellipsoid_cloud_file = current_folder + "/sample_result_data/ellipsoid_1.txt";

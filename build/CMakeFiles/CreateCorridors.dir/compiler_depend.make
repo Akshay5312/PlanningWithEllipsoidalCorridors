@@ -721,6 +721,7 @@ CMakeFiles/CreateCorridors.dir/examples/CreateCorridors.cc.o: ../examples/Create
   /usr/include/spdlog/details/synchronous_factory.h \
   ../EllipsoidalCorridor/LagrangePolynomial.h \
   /usr/include/eigen3/Eigen/Dense \
+  ../EllipsoidalCorridor/InflatedEllipsoid.h \
   ../examples/helpers/read_point_cloud.h \
   /usr/include/c++/11/iostream \
   /usr/include/c++/11/fstream \
@@ -730,6 +731,8 @@ CMakeFiles/CreateCorridors.dir/examples/CreateCorridors.cc.o: ../examples/Create
 
 
 /usr/include/c++/11/fstream:
+
+../EllipsoidalCorridor/InflatedEllipsoid.h:
 
 /usr/include/spdlog/details/synchronous_factory.h:
 

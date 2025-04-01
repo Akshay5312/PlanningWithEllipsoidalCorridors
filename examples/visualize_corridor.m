@@ -19,7 +19,7 @@ point_cloud
 %$Also read the ellipsoid cloud data from sample_result_data/ellipsoid_cloud_{experiment_number}.txt
 %the ellipsoid cloud data is stored such that each row is a point in the format [x y z]. If in 2d, it's [x y]
 ellipsoid_cloud = [];
-fileID = fopen(['sample_result_data/ellipsoid_cloud_' num2str(experiment_number) '.txt'], 'r');
+fileID = fopen(['sample_result_data/ellipsoid_corridor_' num2str(experiment_number) '.txt'], 'r');
 while ~feof(fileID)
     line = fgetl(fileID);
     if ischar(line)
@@ -37,9 +37,11 @@ figure;
 
 %Visualize the ellipsoid cloud
 if size(ellipsoid_cloud, 2) == 2
-    plot(ellipsoid_cloud(:,1), ellipsoid_cloud(:,2), 'b.'); % Blue color for 2D ellipsoids
+    shp = alphaShape(ellipsoid_cloud(:,1), ellipsoid_cloud(:,2));
+    plot(shp, 'FaceColor', 'blue', 'EdgeColor', 'none'); % Blue color for 2D ellipsoids
 elseif size(ellipsoid_cloud, 2) == 3
-    plot3(ellipsoid_cloud(:,1), ellipsoid_cloud(:,2), ellipsoid_cloud(:,3), 'b.'); % Blue color for 3D ellipsoids
+    shp = alphaShape(ellipsoid_cloud(:,1), ellipsoid_cloud(:,2), ellipsoid_cloud(:,3));
+    plot(shp, 'FaceColor', 'blue', 'EdgeColor', 'none'); % Blue color for 3D ellipsoids
 else
     error('Ellipsoid cloud data must be 2D or 3D.');
 end

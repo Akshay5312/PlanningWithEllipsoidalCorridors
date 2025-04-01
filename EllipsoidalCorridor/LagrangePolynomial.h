@@ -7,6 +7,7 @@ namespace CorrGen{
     template<typename T>
     class LagrangePolynomial{
         public:
+        LagrangePolynomial(){}
         LagrangePolynomial(std::vector<double> break_times, std::vector<Eigen::MatrixX<T>> control_points)
             : break_times_(break_times), ctrl_points_(Eigen::MatrixX<Eigen::VectorX<T>>(control_points[0].rows(), control_points[0].cols()))
         {

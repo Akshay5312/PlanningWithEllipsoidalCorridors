@@ -31,7 +31,7 @@ namespace CorrGen{
 
         InflatedEllipsoid(Eigen::MatrixX<T> E, Eigen::VectorX<T> d, T f, Eigen::VectorX<double> reference_point)
             : E_(E), d_(d), f_(f), reference_point_(reference_point) {
-                drake::log()->info("Ellipsoid created");
+                // drake::log()->info("Ellipsoid created");
             }
 
         template<typename Tpoint>
@@ -48,13 +48,40 @@ namespace CorrGen{
             Eigen::MatrixX<T> E_inv = E_.inverse();
             return reference_point_ + (E_inv * d_);
         }
+        std::vector<Eigen::VectorX<T>> sample(int N_samples) const {
+            // Sample points within the ellipsoid
+            std::vector<Eigen::VectorXd> samples(N_samples);
+            Eigen::SelfAdjointEigenSolver<Eigen::MatrixX<T>> eigen_solver(E_);
+            Eigen::MatrixX<T> C = eigen_solver.operatorSqrt();
+            Eigen::MatrixX<T> C_inv = C.inverse();
+
+            Eigen::VectorX<T> q_tilde = center();
+
+            T o = (f_ + 
+                (2 * d_.transpose() * reference_point_ 
+                + reference_point_.transpose() * E_ * reference_point_ 
+                - q_tilde.transpose() * E_ * q_tilde)[0]);
+
+            for (int i = 0; i < N_samples; ++i) {
+                Eigen::VectorXd random_point = Eigen::VectorXd::Random(E_.rows());
+                random_point = random_point / random_point.norm(); // Normalize to unit length
+                random_point = random_point * Eigen::VectorXd::Random(1); // Scale to random length
+                samples[i] = center() + sqrt((1 - o)) * C_inv * random_point;
+            }
+
+            // drake::log()->info("C: \n{}", C);
+            // drake::log()->info("C_inv: \n{}", C_inv);
+            // drake::log()->info("o: \n{}", 1-o);
+            
+            return samples;
+        }
 
     };
 
     InflatedEllipsoid<double> GenerateInflatedEllipsoid(
         const InflatedEllipsoidOptions& options) {
 
-        drake::log()->info("Generating Ellipsoid");
+        // drake::log()->info("Generating Ellipsoid");
 
         int N_q = options.N_q;
         double r_diagonal = options.r_diagonal;
@@ -62,7 +89,7 @@ namespace CorrGen{
         auto point_cloud = options.point_cloud; // Each col is a point
         auto ref_point = options.reference_point; // Reference point for the ellipsoid
 
-        drake::log()->info("Ellipsoid generated");
+        // drake::log()->info("Ellipsoid generated");
 
         drake::solvers::MathematicalProgram prog;
 
@@ -79,9 +106,8 @@ namespace CorrGen{
         for (int i = 0; i < N_q; ++i) {
             for (int j = 0; j < N_q; ++j) {
                 if (i != j) {
-
                     // Add constraints for diagonal dominance
-                    prog.AddLinearConstraint(E(i, i) <= r_diagonal * E(i, j));
+                    prog.AddLinearConstraint(E(i, i) >= r_diagonal * E(i, j));
                     prog.AddLinearConstraint(E(i, i) >= -r_diagonal * E(i, j));
                 
                     // Add constraints for symmetry
@@ -105,7 +131,7 @@ namespace CorrGen{
         // Add a cost to minimize the trace of the ellipsoid matrix E and the scalar f
         prog.AddLinearCost(E.trace() + N_q * r_f * f[0]);
 
-        prog.AddLinearConstraint(f[0] == 0); // Ensure f is bounded
+        // prog.AddLinearConstraint(f[0] == 0); // Ensure f is bounded
 
 
         auto result = drake::solvers::Solve(prog);
