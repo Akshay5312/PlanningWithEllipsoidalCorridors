@@ -7,8 +7,9 @@
 int main(){
     using namespace CorrGen;
     int Nq;
-    int N_ctrl = 10;
-    int N_samples = 30;
+    int N_ctrl = 5;
+    int N_samples = 100;
+
     // Get the current folder location
     std::string current_folder = __FILE__;
     current_folder = current_folder.substr(0, current_folder.find_last_of("/"));
@@ -25,15 +26,20 @@ int main(){
     end_point << 1.0, 1.0;
 
     LagrangePolynomial<double> reference_path({0, 1}, {start_point, end_point});
+    Eigen::VectorXd cost_vector = Eigen::VectorXd::Random(Nq).normalized();
+    LagrangePolynomial<double> cost_path({0, 1}, {cost_vector, cost_vector});
 
     CorrGen::EllipsoidalCorridorOptions corridor_options;
     corridor_options.point_cloud = point_cloud;
+    corridor_options.cost_path = cost_path;
     corridor_options.reference_path = reference_path;
     corridor_options.N_q = Nq;
-    corridor_options.r_diagonal = 10.0;
-    corridor_options.r_f = 1000.0;
+    // corridor_options.r_diagonal = 10.0;
     corridor_options.N_samples = N_samples;
     corridor_options.N_ctrl = N_ctrl;
+    corridor_options.r_f = 0.01; // Cost on the radius of the ellipsoid
+    corridor_options.max_d = 0.25; // Maximum distance from the center of the ellipsoid to the reference in any direction
+    corridor_options.r_min = 0.06; // Minimum radius of the ellipsoid
 
     // Create the corridor.
     EllipsoidalCorridor<double> corridor = GenerateEllipsoidalCorridor(corridor_options);
@@ -54,30 +60,21 @@ int main(){
     std::vector<double> sample_times(N_samples);
     for (int k = 0; k < N_samples; ++k) {
         sample_times[k] = static_cast<double>(k) / (N_samples-1); // Example control breaks
-    }
-
-    std::vector<Eigen::VectorXd> ellipsoid_samples;
-
+    }    
+    
+    std::vector<Eigen::VectorXd> corridor_samples;
     for(int k = 0; k < N_samples; k++){
-        Eigen::MatrixXd E_eps = corridor.E_.value(sample_times[k]);
-        Eigen::VectorXd d_eps = corridor.d_.value(sample_times[k]);
-        double f_eps = corridor.f_.value(sample_times[k])(0,0);
+        Eigen::MatrixXd W_eps = corridor.W(sample_times[k]);
 
-        drake::log()->info("epsilon: {}", sample_times[k]);
-        drake::log()->info("E_eps: \n{}", E_eps);
-        drake::log()->info("d_eps: \n{}", d_eps.transpose());
-        drake::log()->info("f_eps: \n{}", f_eps);
+        InflatedEllipsoid<double> cal_C(W_eps, corridor.reference_path_.value(sample_times[k]));
 
-        InflatedEllipsoid<double> ellipsoid(E_eps, d_eps, f_eps, corridor.reference_path_.value(sample_times[k]));
-        auto ellipsoid_k_samples = ellipsoid.sample(1500);
-
-        for(int i = 0; i < ellipsoid_k_samples.size(); i++){
-            ellipsoid_samples.push_back(ellipsoid_k_samples[i]);
+        auto samples_at_eps = cal_C.sample(1000);
+        for(int i = 0; i < samples_at_eps.size(); ++i) {
+            corridor_samples.push_back(samples_at_eps[i]);
         }
-
     }
 
     std::string ellipsoid_cloud_file = current_folder + "/sample_result_data/ellipsoid_corridor_1.txt";
-    savePointCloud(ellipsoid_cloud_file, ellipsoid_samples);
+    savePointCloud(ellipsoid_cloud_file, corridor_samples);
 
 }
