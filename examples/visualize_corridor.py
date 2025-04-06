@@ -14,7 +14,7 @@ experiment_number = 1  # Replace with your experiment number
 point_cloud_file = f'examples/sample_point_cloud_data/point_cloud_{experiment_number}.txt'
 point_cloud = read_points(point_cloud_file)
 
-ellipsoid_file = f'examples/sample_result_data/ellipsoid_corridor_{experiment_number}.txt'
+ellipsoid_file = f'examples/sample_result_data/corridor_{experiment_number}.txt'
 ellipsoid = read_points(ellipsoid_file)
 
 N_q = len(ellipsoid[0])
@@ -38,7 +38,7 @@ else:
     fig, ax = plt.subplots()
     #plot the ellipsoid
     ellipsoid = np.array(ellipsoid)
-    ax.scatter(*zip(*ellipsoid), c='r', marker='o', label='Ellipsoid')
+    ax.scatter(*zip(*ellipsoid), c='r', marker='o', label='Ellipsoid', s=1)
     ax.scatter(*zip(*point_cloud), c='b', marker='x', label='Point Cloud')
     ax.set_xlabel('X axis')
     ax.set_ylabel('Y axis')

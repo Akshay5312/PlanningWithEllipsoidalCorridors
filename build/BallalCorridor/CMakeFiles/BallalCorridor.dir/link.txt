@@ -1,0 +1,2 @@
+/usr/bin/ar qc libBallalCorridor.a CMakeFiles/BallalCorridor.dir/Ball.cc.o
+/usr/bin/ranlib libBallalCorridor.a

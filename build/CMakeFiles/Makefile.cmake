@@ -7,8 +7,8 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
+  "../BallalCorridor/CMakeLists.txt"
   "../CMakeLists.txt"
-  "../EllipsoidalCorridor/CMakeLists.txt"
   "CMakeFiles/3.22.1/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.22.1/CMakeSystem.cmake"
   "/opt/drake/lib/cmake/drake/drake-config.cmake"
@@ -58,12 +58,12 @@ set(CMAKE_MAKEFILE_OUTPUTS
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
-  "EllipsoidalCorridor/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "BallalCorridor/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/CreateCorridors.dir/DependInfo.cmake"
-  "CMakeFiles/CreateEllipsoid.dir/DependInfo.cmake"
-  "EllipsoidalCorridor/CMakeFiles/EllipsoidalCorridor.dir/DependInfo.cmake"
+  "CMakeFiles/GenerateLargeBall.dir/DependInfo.cmake"
+  "CMakeFiles/GenerateLargeBallCorridor.dir/DependInfo.cmake"
+  "BallalCorridor/CMakeFiles/BallalCorridor.dir/DependInfo.cmake"
   )
