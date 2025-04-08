@@ -7,8 +7,8 @@
 int main(){
     using namespace CorrGen;
     int Nq;
-    int N_ctrl = 15;
-    int N_samples = 200;
+    int N_ctrl = 5;
+    int N_samples = 100;
 
     // Get the current folder location
     std::string current_folder = __FILE__;
@@ -21,13 +21,13 @@ int main(){
     // Let us plan from 0,0,... to 1,1,...
     // The point cloud data can be generated in the box 0 < q < 1
     Eigen::VectorXd start_point(2);
-    start_point << 0.0, 0.0;
+    start_point << 0.1, 0.1;
     Eigen::VectorXd end_point(2);
-    end_point << 1.0, 1.0;
+    end_point << 0.9, 0.9;
 
     LagrangePolynomial<double> reference_path({0, 1}, {start_point, end_point});
     Eigen::VectorXd d_hat_reference(2);
-    d_hat_reference << 1.0, -1.0;
+    d_hat_reference << -1.0, 1.0;
     d_hat_reference = d_hat_reference.normalized();
     LagrangePolynomial<double> d_hat_path({0, 1}, {d_hat_reference, d_hat_reference});
 
@@ -49,6 +49,16 @@ int main(){
     BallCorridor<double> corridor = GenerateBallCorridor(corridor_options);
 
     // The corridor is now created.
+
+    // Save the corridor to a file
+    std::string corridor_file = current_folder + "/result_corridors/corridor_1.txt";
+    std::ofstream file(corridor_file);
+    if (file.is_open()) {
+        file << corridor.toString();
+        file.close();
+    } else {
+        std::cerr << "Unable to open file: " << corridor_file << std::endl;
+    }
 
 
     // //VISUALIZATION
@@ -88,5 +98,7 @@ int main(){
 
     std::string ellipsoid_cloud_file = current_folder + "/sample_result_data/corridor_1.txt";
     savePointCloud(ellipsoid_cloud_file, corridor_samples);
+
+    
 
 }

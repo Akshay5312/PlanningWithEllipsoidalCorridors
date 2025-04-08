@@ -19,6 +19,8 @@ ellipsoid = read_points(ellipsoid_file)
 
 N_q = len(ellipsoid[0])
 
+
+
 if(N_q == 3):
     #plot the point cloud
     fig = plt.figure()
@@ -34,14 +36,24 @@ if(N_q == 3):
     ax.legend()
     plt.show()
 else:
+    x0 = [0.1, 0.1]
+    xf = [0.9, 0.9]
+    # create a line between x0 and xf
+    line = np.linspace(x0, xf, 100)
+
     #plot the point cloud
     fig, ax = plt.subplots()
     #plot the ellipsoid
     ellipsoid = np.array(ellipsoid)
-    ax.scatter(*zip(*ellipsoid), c='r', marker='o', label='Ellipsoid', s=1)
+    ax.scatter(*zip(*ellipsoid), c='r', marker='o', label='Ellipsoid', s=0.01)
     ax.scatter(*zip(*point_cloud), c='b', marker='x', label='Point Cloud')
+    #plot the line
+    ax.plot(line[:, 0], line[:, 1], c='g', label='Line', linewidth=2)
     ax.set_xlabel('X axis')
     ax.set_ylabel('Y axis')
     ax.set_title('Point Cloud and Ellipsoid Visualization')
     ax.legend()
     plt.show()
+
+# Save the figure
+fig.savefig(f'examples/sample_result_data/corridor_{experiment_number}.png')

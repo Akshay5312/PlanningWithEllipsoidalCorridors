@@ -92,6 +92,10 @@ BallCorridor<double> GenerateBallCorridor(const BallCorridorGenerationOptions& o
 
         // Enforce the points to be outside the ball
         balls[k].EnforceNonMembership(prog, options.point_cloud);
+        prog.AddLinearConstraint(
+            balls[k].center() <= Eigen::VectorXd::Ones(N_q) * 1.0);
+        prog.AddLinearConstraint(
+            balls[k].center() >= Eigen::VectorXd::Ones(N_q) * 0.0);
     }
     
     if(options.enforce_taper){
