@@ -15,7 +15,6 @@ add_library(BallalCorridor
     GenerateBall.h
     BallCorridor.h
     GenerateBallCorridor.h
-    LagrangePolynomial.h
     )
 
 target_link_libraries(BallalCorridor drake::drake)

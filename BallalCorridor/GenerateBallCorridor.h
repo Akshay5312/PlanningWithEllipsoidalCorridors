@@ -80,7 +80,10 @@ BallCorridor<double> GenerateBallCorridor(const BallCorridorGenerationOptions& o
             auto r_min = options.approx_options.r_min;
             auto conic_factor = options.approx_options.conic_factor;
 
-            balls[k].ApproxEnforceMinRadius(prog, r_min, d_hat, (r_min + d_max)/2);
+            if((!options.enforce_taper) || (( eps >= break_times[1]) && ( eps <= break_times[N_ctrl-2]))) {         
+                balls[k].ApproxEnforceMinRadius(prog, r_min, d_hat, (r_min + d_max)/2);   
+            }
+
             balls[k].ApproxAddMaxRadiusCost(prog, d_hat, (r_min + d_max)/2);
             balls[k].ApproxEnforceMaxOffset(prog, d_hat, d_max);
             balls[k].EnforceConicDirectionality(prog, d_hat, conic_factor*d_max);
@@ -102,17 +105,17 @@ BallCorridor<double> GenerateBallCorridor(const BallCorridorGenerationOptions& o
         //   If we 'enforce taper', then we cannot enforce a 'minimum radius'
         prog.AddLinearConstraint(
             balls[0].d() == Eigen::VectorXd::Zero(N_q));
-        // prog.AddLinearConstraint(
-        //     balls[0].f() == 1.0);
+        prog.AddLinearConstraint(
+            balls[0].f() == 1.0);
 
         prog.AddLinearConstraint(
             balls[N_samples-1].d() == Eigen::VectorXd::Zero(N_q));
+        prog.AddLinearConstraint(
+            balls[N_samples-1].f() == 1.0);
         // prog.AddLinearConstraint(
-        //     balls[N_samples-1].f() == 1.0);
-        prog.AddLinearConstraint(
-            balls[0].f() <= 1.0);
-        prog.AddLinearConstraint(
-            balls[N_samples-1].f() <= 1.0);
+        //     balls[0].f() <= 1.0);
+        // prog.AddLinearConstraint(
+        //     balls[N_samples-1].f() <= 1.0);
     }else{
         // auto initial_q = options.reference_path.value(0);
         // auto final_q = options.reference_path.value(1);

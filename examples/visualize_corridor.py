@@ -17,6 +17,11 @@ point_cloud = read_points(point_cloud_file)
 ellipsoid_file = f'examples/sample_result_data/corridor_{experiment_number}.txt'
 ellipsoid = read_points(ellipsoid_file)
 
+path_file = f'examples/sample_result_data/path_{experiment_number}.txt'
+path = read_points(path_file)
+
+path = np.array(path)
+
 N_q = len(ellipsoid[0])
 
 
@@ -45,10 +50,11 @@ else:
     fig, ax = plt.subplots()
     #plot the ellipsoid
     ellipsoid = np.array(ellipsoid)
-    ax.scatter(*zip(*ellipsoid), c='r', marker='o', label='Ellipsoid', s=0.01)
-    ax.scatter(*zip(*point_cloud), c='b', marker='x', label='Point Cloud')
+    ax.scatter(*zip(*ellipsoid), c='r', marker='o', label='Corridor', s=0.01)
+    ax.scatter(*zip(*point_cloud), c='b', marker='x', label='Collision Point Cloud')
     #plot the line
-    ax.plot(line[:, 0], line[:, 1], c='g', label='Line', linewidth=2)
+    ax.plot(line[:, 0], line[:, 1], c='g', label='reference', linewidth=2)
+    ax.plot(path[:,0], path[:,1], c='k', label='Resulting Path', linewidth=2)
     ax.set_xlabel('X axis')
     ax.set_ylabel('Y axis')
     ax.set_title('Point Cloud and Ellipsoid Visualization')

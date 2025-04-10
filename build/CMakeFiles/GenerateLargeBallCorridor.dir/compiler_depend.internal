@@ -724,7 +724,7 @@ CMakeFiles/GenerateLargeBallCorridor.dir/examples/GenerateLargeBallCorridor.cc.o
  /home/akshay/Documents/PlanningWithEllipsoidalCorridors/BallalCorridor/GenerateBall.h
  /home/akshay/Documents/PlanningWithEllipsoidalCorridors/BallalCorridor/GenerateBallCorridor.h
  /home/akshay/Documents/PlanningWithEllipsoidalCorridors/BallalCorridor/BallCorridor.h
- /home/akshay/Documents/PlanningWithEllipsoidalCorridors/BallalCorridor/LagrangePolynomial.h
+ /home/akshay/Documents/PlanningWithEllipsoidalCorridors/PathParameterization/LagrangePolynomial.h
  /usr/include/eigen3/Eigen/Dense
  /home/akshay/Documents/PlanningWithEllipsoidalCorridors/examples/helpers/read_point_cloud.h
  /usr/include/c++/11/fstream

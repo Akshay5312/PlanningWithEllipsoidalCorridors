@@ -37,7 +37,7 @@ int main(){
     corridor_options.N_q = Nq;
     corridor_options.N_samples = N_samples;
     corridor_options.N_ctrl = N_ctrl;
-    corridor_options.enforce_taper = false; // Enforce the corridor to be 'tapered' s.t. it contains only the initial and final points at the extremes
+    corridor_options.enforce_taper = true; // Enforce the corridor to be 'tapered' s.t. it contains only the initial and final points at the extremes
 
     corridor_options.SolveLinearApproximation = true;
     corridor_options.approx_options.d_hat = d_hat_path;

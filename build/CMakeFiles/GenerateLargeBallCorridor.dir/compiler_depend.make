@@ -723,7 +723,7 @@ CMakeFiles/GenerateLargeBallCorridor.dir/examples/GenerateLargeBallCorridor.cc.o
   ../BallalCorridor/GenerateBall.h \
   ../BallalCorridor/GenerateBallCorridor.h \
   ../BallalCorridor/BallCorridor.h \
-  ../BallalCorridor/LagrangePolynomial.h \
+  ../PathParameterization/LagrangePolynomial.h \
   /usr/include/eigen3/Eigen/Dense \
   ../examples/helpers/read_point_cloud.h \
   /usr/include/c++/11/fstream \
@@ -733,6 +733,8 @@ CMakeFiles/GenerateLargeBallCorridor.dir/examples/GenerateLargeBallCorridor.cc.o
 
 
 /usr/include/c++/11/fstream:
+
+../PathParameterization/LagrangePolynomial.h:
 
 /usr/include/spdlog/details/synchronous_factory.h:
 
@@ -1855,8 +1857,6 @@ CMakeFiles/GenerateLargeBallCorridor.dir/examples/GenerateLargeBallCorridor.cc.o
 /usr/include/eigen3/Eigen/src/Geometry/Transform.h:
 
 /usr/include/c++/11/set:
-
-../BallalCorridor/LagrangePolynomial.h:
 
 /usr/include/eigen3/Eigen/src/Core/Transpose.h:
 

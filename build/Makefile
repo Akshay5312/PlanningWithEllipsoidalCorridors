@@ -143,6 +143,19 @@ GenerateLargeBallCorridor/fast:
 .PHONY : GenerateLargeBallCorridor/fast
 
 #=============================================================================
+# Target rules for targets named PlanDoubleIntegrator
+
+# Build rule for target.
+PlanDoubleIntegrator: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 PlanDoubleIntegrator
+.PHONY : PlanDoubleIntegrator
+
+# fast build rule for target.
+PlanDoubleIntegrator/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PlanDoubleIntegrator.dir/build.make CMakeFiles/PlanDoubleIntegrator.dir/build
+.PHONY : PlanDoubleIntegrator/fast
+
+#=============================================================================
 # Target rules for targets named BallalCorridor
 
 # Build rule for target.
@@ -203,6 +216,30 @@ examples/GenerateLargeBallCorridor.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GenerateLargeBallCorridor.dir/build.make CMakeFiles/GenerateLargeBallCorridor.dir/examples/GenerateLargeBallCorridor.cc.s
 .PHONY : examples/GenerateLargeBallCorridor.cc.s
 
+examples/PlanDoubleIntegrator.o: examples/PlanDoubleIntegrator.cc.o
+.PHONY : examples/PlanDoubleIntegrator.o
+
+# target to build an object file
+examples/PlanDoubleIntegrator.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PlanDoubleIntegrator.dir/build.make CMakeFiles/PlanDoubleIntegrator.dir/examples/PlanDoubleIntegrator.cc.o
+.PHONY : examples/PlanDoubleIntegrator.cc.o
+
+examples/PlanDoubleIntegrator.i: examples/PlanDoubleIntegrator.cc.i
+.PHONY : examples/PlanDoubleIntegrator.i
+
+# target to preprocess a source file
+examples/PlanDoubleIntegrator.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PlanDoubleIntegrator.dir/build.make CMakeFiles/PlanDoubleIntegrator.dir/examples/PlanDoubleIntegrator.cc.i
+.PHONY : examples/PlanDoubleIntegrator.cc.i
+
+examples/PlanDoubleIntegrator.s: examples/PlanDoubleIntegrator.cc.s
+.PHONY : examples/PlanDoubleIntegrator.s
+
+# target to generate assembly for a file
+examples/PlanDoubleIntegrator.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PlanDoubleIntegrator.dir/build.make CMakeFiles/PlanDoubleIntegrator.dir/examples/PlanDoubleIntegrator.cc.s
+.PHONY : examples/PlanDoubleIntegrator.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -214,12 +251,16 @@ help:
 	@echo "... BallalCorridor"
 	@echo "... GenerateLargeBall"
 	@echo "... GenerateLargeBallCorridor"
+	@echo "... PlanDoubleIntegrator"
 	@echo "... examples/GenerateLargeBall.o"
 	@echo "... examples/GenerateLargeBall.i"
 	@echo "... examples/GenerateLargeBall.s"
 	@echo "... examples/GenerateLargeBallCorridor.o"
 	@echo "... examples/GenerateLargeBallCorridor.i"
 	@echo "... examples/GenerateLargeBallCorridor.s"
+	@echo "... examples/PlanDoubleIntegrator.o"
+	@echo "... examples/PlanDoubleIntegrator.i"
+	@echo "... examples/PlanDoubleIntegrator.s"
 .PHONY : help
 
 

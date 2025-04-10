@@ -65,5 +65,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/GenerateLargeBall.dir/DependInfo.cmake"
   "CMakeFiles/GenerateLargeBallCorridor.dir/DependInfo.cmake"
+  "CMakeFiles/PlanDoubleIntegrator.dir/DependInfo.cmake"
   "BallalCorridor/CMakeFiles/BallalCorridor.dir/DependInfo.cmake"
   )

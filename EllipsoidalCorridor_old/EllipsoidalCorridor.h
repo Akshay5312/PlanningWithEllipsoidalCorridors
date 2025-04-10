@@ -9,7 +9,7 @@
 
 #include "InflatedEllipsoid.h"
 
-#include "LagrangePolynomial.h"
+#include "../PathParameterization/LagrangePolynomial.h"
 
 namespace CorrGen{
     struct EllipsoidalCorridorOptions{
