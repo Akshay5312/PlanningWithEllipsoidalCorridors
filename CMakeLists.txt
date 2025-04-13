@@ -29,3 +29,6 @@ target_link_libraries(GenerateLargeBallCorridor PUBLIC drake::drake)
 
 add_executable(PlanDoubleIntegrator examples/PlanDoubleIntegrator.cc)
 target_link_libraries(PlanDoubleIntegrator PUBLIC drake::drake)
+
+add_executable(sample_corridor_trajectories examples/sample_corridor_trajectories.cc)
+target_link_libraries(sample_corridor_trajectories PUBLIC drake::drake)

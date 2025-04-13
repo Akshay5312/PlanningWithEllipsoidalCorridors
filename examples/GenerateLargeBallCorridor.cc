@@ -97,8 +97,6 @@ int main(){
     }
 
     std::string ellipsoid_cloud_file = current_folder + "/sample_result_data/corridor_1.txt";
-    savePointCloud(ellipsoid_cloud_file, corridor_samples);
-
-    
+    savePointCloud(ellipsoid_cloud_file, corridor_samples);    
 
 }

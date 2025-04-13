@@ -66,6 +66,7 @@ CMAKE_BINARY_DIR = /home/akshay/Documents/PlanningWithEllipsoidalCorridors/build
 all: CMakeFiles/GenerateLargeBall.dir/all
 all: CMakeFiles/GenerateLargeBallCorridor.dir/all
 all: CMakeFiles/PlanDoubleIntegrator.dir/all
+all: CMakeFiles/sample_corridor_trajectories.dir/all
 all: BallalCorridor/all
 .PHONY : all
 
@@ -77,6 +78,7 @@ preinstall: BallalCorridor/preinstall
 clean: CMakeFiles/GenerateLargeBall.dir/clean
 clean: CMakeFiles/GenerateLargeBallCorridor.dir/clean
 clean: CMakeFiles/PlanDoubleIntegrator.dir/clean
+clean: CMakeFiles/sample_corridor_trajectories.dir/clean
 clean: BallalCorridor/clean
 .PHONY : clean
 
@@ -172,6 +174,32 @@ PlanDoubleIntegrator: CMakeFiles/PlanDoubleIntegrator.dir/rule
 CMakeFiles/PlanDoubleIntegrator.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PlanDoubleIntegrator.dir/build.make CMakeFiles/PlanDoubleIntegrator.dir/clean
 .PHONY : CMakeFiles/PlanDoubleIntegrator.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/sample_corridor_trajectories.dir
+
+# All Build rule for target.
+CMakeFiles/sample_corridor_trajectories.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sample_corridor_trajectories.dir/build.make CMakeFiles/sample_corridor_trajectories.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sample_corridor_trajectories.dir/build.make CMakeFiles/sample_corridor_trajectories.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/akshay/Documents/PlanningWithEllipsoidalCorridors/build/CMakeFiles --progress-num=9,10 "Built target sample_corridor_trajectories"
+.PHONY : CMakeFiles/sample_corridor_trajectories.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/sample_corridor_trajectories.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/akshay/Documents/PlanningWithEllipsoidalCorridors/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/sample_corridor_trajectories.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/akshay/Documents/PlanningWithEllipsoidalCorridors/build/CMakeFiles 0
+.PHONY : CMakeFiles/sample_corridor_trajectories.dir/rule
+
+# Convenience name for target.
+sample_corridor_trajectories: CMakeFiles/sample_corridor_trajectories.dir/rule
+.PHONY : sample_corridor_trajectories
+
+# clean rule for target.
+CMakeFiles/sample_corridor_trajectories.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sample_corridor_trajectories.dir/build.make CMakeFiles/sample_corridor_trajectories.dir/clean
+.PHONY : CMakeFiles/sample_corridor_trajectories.dir/clean
 
 #=============================================================================
 # Target rules for target BallalCorridor/CMakeFiles/BallalCorridor.dir

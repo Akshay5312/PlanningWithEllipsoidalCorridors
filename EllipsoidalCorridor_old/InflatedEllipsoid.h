@@ -7,7 +7,7 @@
 
 #include <drake/common/text_logging.h>
 
-#include "LagrangePolynomial.h"
+#include "../PathParameterization/LagrangePolynomial.h"
 
 namespace CorrGen{
     struct InflatedEllipsoidOptions{

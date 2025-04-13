@@ -1,6 +1,7 @@
 /home/akshay/Documents/PlanningWithEllipsoidalCorridors/build/CMakeFiles/GenerateLargeBall.dir
 /home/akshay/Documents/PlanningWithEllipsoidalCorridors/build/CMakeFiles/GenerateLargeBallCorridor.dir
 /home/akshay/Documents/PlanningWithEllipsoidalCorridors/build/CMakeFiles/PlanDoubleIntegrator.dir
+/home/akshay/Documents/PlanningWithEllipsoidalCorridors/build/CMakeFiles/sample_corridor_trajectories.dir
 /home/akshay/Documents/PlanningWithEllipsoidalCorridors/build/CMakeFiles/edit_cache.dir
 /home/akshay/Documents/PlanningWithEllipsoidalCorridors/build/CMakeFiles/rebuild_cache.dir
 /home/akshay/Documents/PlanningWithEllipsoidalCorridors/build/BallalCorridor/CMakeFiles/BallalCorridor.dir

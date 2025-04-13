@@ -2,9 +2,11 @@
 #include "../BallalCorridor/BallCorridor.h"
 #include "../CorridorPlanning/CorridorPlanningProblem.h"
 #include "../CorridorPlanning/TimeVaryingProjectionToBall.h"
+#include "../CorridorPlanning/IterativelySolve.h"
 
 #include <drake/common/text_logging.h>
 #include <drake/solvers/mathematical_program.h>
+#include "helpers/read_point_cloud.h"
 
 #include <iostream>
 #include <fstream>
@@ -13,27 +15,20 @@ int main(){
     using namespace CorrGen;
     using namespace CorrPlanning;
     
-    int Ny = 20;
-    int N_samples= 20;
+    int Ny = 50;
+    int N_samples= 50;
+    int N_ctrl = 5;
+    int NL_ctrl = 4;
 
+    int Nq;
+    // Get the current folder location
     std::string current_folder = __FILE__;
     current_folder = current_folder.substr(0, current_folder.find_last_of("/"));
-    std::string corridor_file = current_folder + "/result_corridors/corridor_1.txt";
 
-    // Read the corridor from a file
-    std::ifstream file(corridor_file);
-    std::string corridor_string;
-    if (file.is_open()) {
-        std::string line;
-        while (std::getline(file, line)) {
-            corridor_string += line + "\n";
-        }
-        file.close();
-    } else {
-        std::cerr << "Unable to open file: " << corridor_file << std::endl;
-    }
-    // Parse the corridor string to create a BallCorridor object
-    auto corridor = BallCorridor<double>::FromString(corridor_string);
+    // Read the point cloud data provided
+    std::string point_cloud_file = current_folder + "/sample_point_cloud_data/point_cloud_1.txt";
+    Eigen::MatrixXd point_cloud = readPointCloud(point_cloud_file, Nq);
+
 
     // Create the linearized robot dynamics
     LinearizedRobotDynamics dynamics;
@@ -49,31 +44,37 @@ int main(){
 
     dynamics.R = Eigen::MatrixXd::Identity(4, 4); // Cost on the input
     dynamics.P = Eigen::MatrixXd::Identity(4, 4); // Cost on the offset from the state
-    dynamics.R(0, 0) = 0.0;
-    dynamics.R(1, 1) = 0.0;
-    dynamics.R(2, 2) = 100.0;
-    dynamics.R(3, 3) = 100.0;
 
+    ProblemParameters params;
+    params.dynamics = dynamics;
+    params.N_ctr = N_ctrl;
+    params.N_y = Ny;
+    params.NL_ctrl = NL_ctrl;
+    params.collision_points = point_cloud;
 
-    // Create the corridor planning problem
-    CorridorPlanningProblem planning_problem(corridor, dynamics, N_samples, Ny);
+    params.N_samples = N_samples;
+    params.q0 = Eigen::VectorXd::Zero(2);
+    params.q0[0] = 0.1;
+    params.q0[1] = 0.1;
+    
+    params.qf = Eigen::VectorXd::Zero(2);
+    params.qf[0] = 0.9;
+    params.qf[1] = 0.9;
 
-    // Solve the planning problem
+    params.r_min = 0.08;
+    params.d_max = 0.75;
+    params.conic_factor = 0.1;
 
-    auto start_time = std::chrono::high_resolution_clock::now();
-    auto approximate_solution = planning_problem.ApproximateSolutionByProjection();
-    auto end_time = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed_time = end_time - start_time;
-    drake::log()->info("Solving took {} milliseconds", elapsed_time.count() * 1000);
-    drake::log()->info("Approximate solution: \n{}", approximate_solution.transpose());
-    drake::log()->info("Approximate solution norm: {}", approximate_solution.norm());
+    IterativePlanningProblem planning_problem(params, 10);
 
+    int solution_corridor_index = 0;
+    Eigen::VectorXd y_sol = planning_problem.ApproximateInEachCorridor( solution_corridor_index );    
 
-    std::string result_path_file = current_folder + "/sample_result_data/path_1.txt";
-    std::ofstream result_file(result_path_file);
-    for(int i = 0; i < N_samples; i++){
-        double eps = static_cast<double>(i) / (N_samples-1);
-        result_file << planning_problem.x(eps, approximate_solution).head(2).transpose() << "\n";
-    }
+    std::string corridor_file = current_folder + "/result_corridors/corridor_1.txt";
+    planning_problem.SaveAllCorridorsToFile(corridor_file);
 
+    std::string trajectory_file = current_folder + "/result_corridors/trajectory_1.txt";
+    std::vector<Eigen::VectorXd> trajectory = planning_problem.SampleSolution(y_sol, solution_corridor_index);
+    savePointCloud(trajectory_file, trajectory);
+    
 }

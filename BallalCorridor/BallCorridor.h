@@ -12,6 +12,8 @@ namespace CorrGen{
             Nq_ = d_.value(0).rows();
         }
 
+        BallCorridor(){}
+
         static BallCorridor FromString(const std::string& str){
             // Parse the string to initialize the object
             std::istringstream iss(str);
@@ -121,6 +123,24 @@ namespace CorrGen{
                 std::string ref_as_str = ss.str();
                 str += "ref[" + std::to_string(i) + "] = " +  ref_as_str + "\n";
             }
+            return str;
+        }
+
+        std::string toStringOfSamples(int N_time_samples = 50){
+            std::string str = "";
+            std::vector<double> sample_times(N_time_samples);
+            for (int k = 0; k < N_time_samples; ++k) {
+                sample_times[k] = static_cast<double>(k) / (N_time_samples-1);
+                auto ball_eps = getBall(sample_times[k]);
+                auto ball_samples = ball_eps.sample(1000);
+                for(int i = 0; i < ball_samples.size(); ++i) {
+                    for(int j = 0; j < ball_samples[i].rows(); ++j) {
+                        str += std::to_string(ball_samples[i][j]) + " ";
+                    }
+                    str += "\n";
+                }
+            }
+
             return str;
         }
 

@@ -32,7 +32,7 @@ struct BallCorridorGenerationOptions{
     LinearApproximationOptions approx_options;
 };
 
-BallCorridor<double> GenerateBallCorridor(const BallCorridorGenerationOptions& options){
+BallCorridor<double> GenerateBallCorridor(const BallCorridorGenerationOptions& options, bool* success = nullptr){
     drake::solvers::MathematicalProgram prog;
     
     int N_q = options.N_q;
@@ -127,9 +127,15 @@ BallCorridor<double> GenerateBallCorridor(const BallCorridorGenerationOptions& o
 
     // Solve the program
     auto result = drake::solvers::Solve(prog);
+    
+    if (success != nullptr) {
+        *success = result.is_success();
+    }
+
     if (!result.is_success()) {
         drake::log()->warn("Ball corridor generation failed. Solver result : {}", result.get_solution_result());
-        return BallCorridor<double>(LagrangePolynomial<double>(), LagrangePolynomial<double>(), options.reference_path);
+        drake::log()->info("is success? {}", *success);
+        return BallCorridor<double>();
     }
 
     std::vector<Eigen::MatrixX<double>> d(N_ctrl);

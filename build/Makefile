@@ -156,6 +156,19 @@ PlanDoubleIntegrator/fast:
 .PHONY : PlanDoubleIntegrator/fast
 
 #=============================================================================
+# Target rules for targets named sample_corridor_trajectories
+
+# Build rule for target.
+sample_corridor_trajectories: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sample_corridor_trajectories
+.PHONY : sample_corridor_trajectories
+
+# fast build rule for target.
+sample_corridor_trajectories/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sample_corridor_trajectories.dir/build.make CMakeFiles/sample_corridor_trajectories.dir/build
+.PHONY : sample_corridor_trajectories/fast
+
+#=============================================================================
 # Target rules for targets named BallalCorridor
 
 # Build rule for target.
@@ -240,6 +253,30 @@ examples/PlanDoubleIntegrator.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PlanDoubleIntegrator.dir/build.make CMakeFiles/PlanDoubleIntegrator.dir/examples/PlanDoubleIntegrator.cc.s
 .PHONY : examples/PlanDoubleIntegrator.cc.s
 
+examples/sample_corridor_trajectories.o: examples/sample_corridor_trajectories.cc.o
+.PHONY : examples/sample_corridor_trajectories.o
+
+# target to build an object file
+examples/sample_corridor_trajectories.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sample_corridor_trajectories.dir/build.make CMakeFiles/sample_corridor_trajectories.dir/examples/sample_corridor_trajectories.cc.o
+.PHONY : examples/sample_corridor_trajectories.cc.o
+
+examples/sample_corridor_trajectories.i: examples/sample_corridor_trajectories.cc.i
+.PHONY : examples/sample_corridor_trajectories.i
+
+# target to preprocess a source file
+examples/sample_corridor_trajectories.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sample_corridor_trajectories.dir/build.make CMakeFiles/sample_corridor_trajectories.dir/examples/sample_corridor_trajectories.cc.i
+.PHONY : examples/sample_corridor_trajectories.cc.i
+
+examples/sample_corridor_trajectories.s: examples/sample_corridor_trajectories.cc.s
+.PHONY : examples/sample_corridor_trajectories.s
+
+# target to generate assembly for a file
+examples/sample_corridor_trajectories.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sample_corridor_trajectories.dir/build.make CMakeFiles/sample_corridor_trajectories.dir/examples/sample_corridor_trajectories.cc.s
+.PHONY : examples/sample_corridor_trajectories.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -252,6 +289,7 @@ help:
 	@echo "... GenerateLargeBall"
 	@echo "... GenerateLargeBallCorridor"
 	@echo "... PlanDoubleIntegrator"
+	@echo "... sample_corridor_trajectories"
 	@echo "... examples/GenerateLargeBall.o"
 	@echo "... examples/GenerateLargeBall.i"
 	@echo "... examples/GenerateLargeBall.s"
@@ -261,6 +299,9 @@ help:
 	@echo "... examples/PlanDoubleIntegrator.o"
 	@echo "... examples/PlanDoubleIntegrator.i"
 	@echo "... examples/PlanDoubleIntegrator.s"
+	@echo "... examples/sample_corridor_trajectories.o"
+	@echo "... examples/sample_corridor_trajectories.i"
+	@echo "... examples/sample_corridor_trajectories.s"
 .PHONY : help
 
 

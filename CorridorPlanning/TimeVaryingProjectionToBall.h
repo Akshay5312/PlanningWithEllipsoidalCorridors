@@ -32,7 +32,8 @@ class VaryingProjectionToBall{
         }
 
         // Create the Lagrange polynomial for the orthonormality constraint
-        CorrGen::LagrangePolynomial<double> onorm_path(
+        drake::trajectories::PiecewisePolynomial<double> onorm_path = 
+        drake::trajectories::PiecewisePolynomial<double>::CubicWithContinuousSecondDerivatives(
             onorm_breaks,
             onorm_ctrl_points
         );
@@ -52,16 +53,22 @@ class VaryingProjectionToBall{
         }
 
         // Create the Lagrange polynomial
-        CorrGen::LagrangePolynomial<double> onorm_new_path(
+        drake::trajectories::PiecewisePolynomial<double> onorm_new_path = 
+        drake::trajectories::PiecewisePolynomial<double>::CubicWithContinuousSecondDerivatives(
             onorm_new_breaks,
             onorm_new_ctrl_points
         );
+
         onorm_path_ = onorm_new_path;
     }
 
-    CorrGen::LagrangePolynomial<double>& path(){
-        return onorm_path_;
-    }
+    int N_y() const {return N_y_;}
+    int N_q() const {return N_q_;}
+    
+
+    // drake::trajectories::PiecewisePolynomial<double><double>& path(){
+    //     return onorm_path_;
+    // }
 
     Eigen::MatrixXd L(double eps) const {
         // Evaluate the path at a given epsilon
@@ -69,16 +76,16 @@ class VaryingProjectionToBall{
     }
     Eigen::MatrixXd dL(double eps) const {
         // Evaluate the derivative of the path at a given epsilon
-        return onorm_path_.d_value(eps);
+        return onorm_path_.EvalDerivative(eps, 1);
     }
     Eigen::MatrixXd ddL(double eps) const {
         // Evaluate the second derivative of the path at a given epsilon
-        return onorm_path_.dd_value(eps);
+        return onorm_path_.EvalDerivative(eps, 2);
     }
 
     private:
     int N_y_;
     int N_q_;
-    CorrGen::LagrangePolynomial<double> onorm_path_;
+    drake::trajectories::PiecewisePolynomial<double> onorm_path_;
 };
 } // namespace CorrPlanning

@@ -69,12 +69,7 @@ void savePointCloud(const std::string& filename, const std::vector<Eigen::Vector
     std::ofstream file(filename);
     if (file.is_open()) {
         for (const auto& point : point_cloud) {
-            for (int i = 0; i < point.size(); ++i) {
-                file << point(i);
-                if (i < point.size() - 1) {
-                    file << " ";
-                }
-            }
+            file << point.transpose();
             file << "\n";
         }
         file.close();
